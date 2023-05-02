@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="408.0" prefWidth="695.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openmbee.plugin.cfgmgmt.controller.ElementChangeHistoryController">
+    <children>
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="305.0" layoutX="22.0" layoutY="78.0" stroke="BLACK" strokeType="INSIDE" width="650.0" />
+        <TableView fx:id="ehTable" layoutX="47.0" layoutY="105.0" prefHeight="205.0" prefWidth="600.0">
+            <columns>
+                <TableColumn fx:id="changeRecordNameColumn" prefWidth="115.0" text="Change Records" />
+                <TableColumn fx:id="startTimeColumn" minWidth="0.0" prefWidth="200.0" text="Start Date" />
+                <TableColumn fx:id="completionTimeColumn" minWidth="6.4000244140625" prefWidth="200.0" text="Completion Date" />
+                <TableColumn fx:id="revisionColumn" prefWidth="84.0" text="Revision" />
+            </columns>
+        </TableView>
+        <Button fx:id="showDiffButton" layoutX="47.0" layoutY="326.0" mnemonicParsing="false" onAction="#showElementContainmentTree" prefHeight="26.0" prefWidth="114.0" text="Show CR Changes" />
+        <CheckBox fx:id="completedChangesCheckBox" layoutX="379.0" layoutY="331.0" mnemonicParsing="false" onAction="#refreshTable" selected="true" text="Show only completed changes" />
+        <Label layoutX="22.0" layoutY="29.0" text="Change History for : ">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Label>
+        <Label fx:id="ceNameAndID" layoutX="161.0" layoutY="30.0">
+            <font>
+               <Font name="System Bold" size="14.0" />
+            </font>
+        </Label>
+        <Label fx:id="selectCrLabel" layoutX="47.0" layoutY="359.0">
+            <font>
+                <Font name="System Bold" size="12.0" />
+            </font>
+        </Label>
+      <CheckBox fx:id="optimizeForMemoryCheckBox" layoutX="379.0" layoutY="359.0" mnemonicParsing="false" text="Optimize Difference Viewer for Memory Usage" />
+    </children>
+</AnchorPane>

@@ -1,0 +1,16 @@
+<plugin 
+         id="${plugin.id}"
+         name=${plugin.name}
+         internalVersion="${internal.version}" 
+         version="${human.version}" 
+         provider-name="OpenMBEE"
+         class-lookup="LocalFirst" 
+         class="${plugin.id}.${plugin.class}">
+     <requires> 
+         <api version="1.0"/> 
+     </requires> 
+     <runtime> 
+         <!-- START AUTO-GENERATED --> 
+         <!-- END AUTO-GENERATED --> 
+     </runtime> 
+</plugin> 

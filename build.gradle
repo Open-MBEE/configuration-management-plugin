@@ -1,0 +1,278 @@
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.zip.ZipFile
+
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+apply plugin: 'java'
+apply plugin: 'distribution'
+apply plugin: 'rebel'
+apply plugin: 'jacoco'
+apply plugin: 'org.openjfx.javafxplugin'
+
+sourceCompatibility = 11
+
+project.setProperty('version', project.getProperties().get('version'))
+
+buildscript {
+    repositories {
+        flatDir { dirs "libz"}
+        mavenLocal()
+        gradlePluginPortal()
+        mavenCentral()
+    }
+    //Dependencies for gradle to build
+    dependencies {
+        classpath group: 'org.zeroturnaround', name: 'gradle-jrebel-plugin', version: '1.1.3'
+        classpath group: 'org.openjfx', name: 'javafx-plugin', version: '0.0.9'
+    }
+
+}
+
+repositories {
+    flatDir { dirs "libz" } //put msosa zip here
+    mavenLocal()
+    mavenCentral()
+}
+
+configurations {
+    preCompile
+    testDependencyLibs
+}
+
+dependencies {
+    implementation group: 'com.google.code.gson', name:'gson', version:'2.8.2'
+    implementation group: 'org.apache.commons', name: 'commons-text', version: '1.9'
+    implementation group: 'javax.ws.rs', name:'javax.ws.rs-api', version: '2.1.1'
+    implementation group: 'org.glassfish.jersey.core', name: 'jersey-common', version: '2.25.1'
+
+    testImplementation group: 'junit', name: 'junit', version: '4.13'
+    testImplementation group: 'org.mockito', name: 'mockito-core', version: '3.9.0'
+    testImplementation group: 'org.hamcrest', name: 'hamcrest-core', version: '1.3'
+    testImplementation group: 'org.skyscreamer', name: 'jsonassert', version: '1.4.0'
+    testImplementation group: 'org.mockito', name: 'mockito-inline', version: '3.8.0'
+
+    preCompile  group: "$noMagicGroup", name: "$noMagicName", version: "$noMagicVersion", classifier: "$noMagicClassifier", ext: "$noMagicExt"
+    implementation fileTree(
+            dir: 'build/dependency-cache/extracted',
+            include: ['lib/**/*.jar', 'plugins/**/*.jar'],
+            exclude: (['plugins/com.nomagic.collaborator.publisher/**/*.jar', 'plugins/com.nomagic.magicdraw.emfuml2xmi*/**/*.jar', 'lib/bundles/com.typesafe.*.jar']).flatten()
+    )
+    implementation fileTree(dir: 'lib', include: ['**/*.jar'])
+}
+
+javafx {
+    version = "11.0.2"
+    modules = ['javafx.controls', 'javafx.fxml', 'javafx.swing']
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src/main/java'
+        }
+        resources {
+            srcDir 'src/main/resources'
+        }
+    }
+    test {
+        java {
+            srcDir 'src/test/java'
+        }
+        resources {
+            srcDir 'src/test/resources'
+        }
+    }
+  
+}
+
+task makeDepsFolder() {
+    File f = new File('build/tmp/libs')
+    if(!f.exists()) {
+        mkdir f
+    }
+}
+
+task copyDeps(type: Copy) {
+    dependsOn makeDepsFolder
+    from configurations.testDependencyLibs.files
+    from configurations.testRuntime.files
+    into 'build/tmp/libs'
+}
+
+task chmodDepsLinux(type: Exec) {
+    commandLine 'chmod', '-R', '755', 'build/tmp/libs'
+}
+
+task chmodDepsWindows(type: Exec) {
+    commandLine 'cmd', '/c', 'Powershell -File src/main/resources/chmodDepsWindows.ps1 -libsPath build\\tmp\\libs'
+}
+
+task manageDeps() {
+    dependsOn copyDeps
+
+    doLast {
+        if(org.gradle.internal.os.OperatingSystem.current() == org.gradle.internal.os.OperatingSystem.WINDOWS) {
+            println 'chmodWin'
+            chmodDepsWindows
+        }
+        else {
+            println 'chmod'
+            chmodDepsLinux
+        }
+    }
+}
+
+task extractDependencies {
+    configurations.preCompile.resolvedConfiguration.resolvedArtifacts.each { artifact ->
+        inputs.file artifact.file
+        def zipFile = new ZipFile(artifact.file)
+        zipFile.entries().each { entry ->
+            if (!entry.isDirectory()) {
+                outputs.file 'build/dependency-cache/extracted/' + entry.getName()
+            }
+        }
+    }
+    doLast {
+        inputs.files.each { archive ->
+            copy {
+                from zipTree(archive)
+                into 'build/dependency-cache/extracted'
+            }
+        }
+        fileTree(dir: 'build/dependency-cache/extracted', include: '*.zip').each { archive ->
+            copy {
+                from zipTree(archive)
+                into 'build/dependency-cache/extracted'
+            }
+        }
+    }
+}
+compileJava.dependsOn extractDependencies
+
+class PreDist extends DefaultTask {
+    String internalVersion
+    String buildTimestamp
+    String projectPackage
+    String projectVersion
+    String product
+    String id
+    String description
+    String packageName
+    String packageClass
+
+    @TaskAction
+    void executeTask() {
+
+        def fileTreeBuilder = new FileTreeBuilder(new File('build/generated-dist'))
+        fileTreeBuilder.dir("data")
+        fileTreeBuilder.dir("profiles")
+        fileTreeBuilder.dir("plugin"){
+            dir("${projectPackage}")
+        }
+
+        project.copy {
+            from project.configurations.compile.resolvedConfiguration.resolvedArtifacts.file
+            from 'lib'
+            from project.jar
+            into "build/generated-dist/plugins/${projectPackage}"
+        }
+
+        String pluginLibraries = ''
+        project.fileTree(dir: "build/generated-dist/plugins/${projectPackage}", include: '**/*.jar').each { file ->
+            pluginLibraries += '\t\t<library name=\"' + file.absolutePath.replaceAll(~/.*build[\\\\/]generated-dist[\\\\/]plugins[\\\\/]${projectPackage}[\\\\/]/, '') + '\"/>' + System.lineSeparator()
+        }
+
+        project.copy {
+            from 'src/dist/template/files/plugin.xml'
+            filter { String line -> line.replace('<!-- START AUTO-GENERATED -->', '<!-- START AUTO-GENERATED -->' + System.lineSeparator() + System.lineSeparator() + pluginLibraries) }
+            filter { String line -> line.replace('${human.version}', projectVersion) }
+            filter { String line -> line.replace('${internal.version}', internalVersion) }
+            filter { String line -> line.replace('${plugin.name}', packageName) }
+            filter { String line -> line.replace('${plugin.id}', projectPackage) }
+            filter { String line -> line.replace('${plugin.class}', packageClass) }
+            into "build/generated-dist/plugins/${projectPackage}"
+        }
+
+        project.copy {
+            from 'src/dist/template/profiles'
+            into 'build/generated-dist/profiles'
+        }
+
+        String descriptorFiles = ''
+        project.fileTree(dir: 'build/generated-dist').each { file ->
+            String relativePath = file.absolutePath.replaceAll(/.*build[\\\\/]generated-dist[\\\\/]/, '')
+            descriptorFiles += '\t\t<file from=\"' + relativePath + '\" to=\"' + relativePath + '\"/>' + System.lineSeparator()
+        }
+
+        project.copy {
+            from 'src/dist/template/files/descriptor.xml'
+            filter { String line -> line.replace('<!-- START AUTO-GENERATED -->', '<!-- START AUTO-GENERATED -->' + System.lineSeparator() + System.lineSeparator() + descriptorFiles) }
+            filter { String line -> line.replace('${human.version}', projectVersion) }
+            filter { String line -> line.replace('${internal.version}', internalVersion) }
+            filter { String line -> line.replace('${build.timestamp}', buildTimestamp) }
+            filter { String line -> line.replace('${descriptor.product}', product) }
+            filter { String line -> line.replace('${descriptor.id}', id) }
+            filter { String line -> line.replace('${descriptor.name}', packageName) }
+            filter { String line -> line.replace('${descriptor.description}', description) }
+            into "build/generated-dist/data/resourcemanager"
+        }
+
+        project.fileTree(dir: 'build/generated-dist/data/resourcemanager').each { file ->
+            file.renameTo(project.file(file.getAbsolutePath().replace('descriptor.xml', "MDR_Plugin_${product}_${id}_descriptor.xml")))
+        }
+    }
+}
+
+task preDist(type: PreDist) {
+    internalVersion = System.currentTimeSeconds()
+    buildTimestamp = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH:mm").format(LocalDateTime.now())
+    projectPackage = pluginPackage
+    projectVersion = version
+    product = descriptorProduct
+    id = descriptorId
+    description = descriptorDescription
+    packageName = pluginName
+    packageClass = pluginClass
+}
+
+preDist.dependsOn jar
+
+distributions {
+    main {
+        contents {
+            exclude 'template'
+            from 'build/generated-dist'
+        }
+    }
+}
+
+distZip {
+    includeEmptyDirs false
+    duplicatesStrategy DuplicatesStrategy.EXCLUDE
+    eachFile { file ->
+        file.setPath(path.substring(path.indexOf("/") + 1, path.length()))
+    }
+}
+distZip.dependsOn preDist
+
+installDist {
+    destinationDir = file('build/plugin')
+    doLast {
+        copy {
+            fileMode 0755
+            from 'build/dependency-cache/extracted'
+            from 'build/plugin'
+            into 'build/install'
+        }
+    }
+}
+installDist.dependsOn distZip
+
+// jacoco.exec file is no longer compatible in sonar8.instead creating a report in xml format
+jacocoTestReport {
+  reports {
+  xml.enabled true
+  }
+}
+test.finalizedBy jacocoTestReport

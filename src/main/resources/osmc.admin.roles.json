@@ -1,0 +1,317 @@
+[
+  {
+    "permissions": [
+      {
+        "operationAssignableAccessScope": "GLOBAL_OR_OBJECT",
+        "protectedType": "com.nomagic.esi.resource",
+        "name": "com.nomagic.esi.resource_read.resource",
+        "operationName": "read.resource",
+        "ID": "9649cb30-6933-49f1-b309-7aade63340cc",
+        "operationDisplayName": "Read Resources",
+        "protectedTypeDisplayName": "Resource"
+      }
+    ],
+    "name": "Resource Reviewer",
+    "description": "Resource-specific role. Users who are assigned to this role can open resource, and navigate through the content to review it.",
+    "ID": "e3cf7416-9cf3-42ff-84e6-e9d4283dfd18",
+    "predefined": true,
+    "containGlobalOperationsOnly": false
+  },
+  {
+    "permissions": [
+      {
+        "operationAssignableAccessScope": "GLOBAL_OR_OBJECT",
+        "protectedType": "com.nomagic.esi.resource",
+        "name": "com.nomagic.esi.resource_edit.resource",
+        "operationName": "edit.resource",
+        "ID": "0b972f77-368c-4511-9285-0069a1a8bf07",
+        "operationDisplayName": "Edit Resources",
+        "protectedTypeDisplayName": "Resource"
+      },
+      {
+        "operationAssignableAccessScope": "GLOBAL_ONLY",
+        "protectedType": "com.nomagic.esi.server",
+        "name": "com.nomagic.esi.server_list.all.users",
+        "operationName": "list.all.users",
+        "ID": "34e47503-ad58-401b-a3d9-fdb0e00ea651",
+        "operationDisplayName": "List All Users",
+        "protectedTypeDisplayName": "Server"
+      },
+      {
+        "operationAssignableAccessScope": "GLOBAL_OR_OBJECT",
+        "protectedType": "com.nomagic.esi.resource",
+        "name": "com.nomagic.esi.resource_remove.resource",
+        "operationName": "remove.resource",
+        "ID": "7d4c8df2-2438-46ea-bc11-d76bf00bde63",
+        "operationDisplayName": "Remove Resource",
+        "protectedTypeDisplayName": "Resource"
+      },
+      {
+        "operationAssignableAccessScope": "GLOBAL_OR_OBJECT",
+        "protectedType": "com.nomagic.esi.resource",
+        "name": "com.nomagic.esi.resource_read.resource",
+        "operationName": "read.resource",
+        "ID": "9649cb30-6933-49f1-b309-7aade63340cc",
+        "operationDisplayName": "Read Resources",
+        "protectedTypeDisplayName": "Resource"
+      },
+      {
+        "operationAssignableAccessScope": "GLOBAL_OR_OBJECT",
+        "protectedType": "com.nomagic.esi.resource",
+        "name": "com.nomagic.esi.resource_edit.resource.properties",
+        "operationName": "edit.resource.properties",
+        "ID": "a93ff74f-baae-4aea-8f79-1a9d423f35fa",
+        "operationDisplayName": "Edit Resource Properties",
+        "protectedTypeDisplayName": "Resource"
+      },
+      {
+        "operationAssignableAccessScope": "GLOBAL_OR_OBJECT",
+        "protectedType": "com.nomagic.esi.resource",
+        "name": "com.nomagic.esi.resource_manage.owned.resource.access.right",
+        "operationName": "manage.owned.resource.access.right",
+        "ID": "cddf68ab-a0ec-4174-b358-b8db4ffb8467",
+        "operationDisplayName": "Manage Owned Resource Access Right",
+        "protectedTypeDisplayName": "Resource"
+      },
+      {
+        "operationAssignableAccessScope": "GLOBAL_OR_OBJECT",
+        "protectedType": "com.nomagic.esi.resource",
+        "name": "com.nomagic.esi.resource_administer.resources",
+        "operationName": "administer.resources",
+        "ID": "fcfcc026-ed0b-46a1-8527-88d40a90a0ed",
+        "operationDisplayName": "Administer Resources",
+        "protectedTypeDisplayName": "Resource"
+      },
+      {
+        "operationAssignableAccessScope": "GLOBAL_OR_OBJECT",
+        "protectedType": "com.nomagic.esi.resource",
+        "name": "com.nomagic.esi.resource_manage.model.permissions",
+        "operationName": "manage.model.permissions",
+        "ID": "fef665af-1c97-409b-a360-cf1990a3fe1b",
+        "operationDisplayName": "Manage Model Permissions",
+        "protectedTypeDisplayName": "Resource"
+      }
+    ],
+    "name": "Resource Manager",
+    "description": "Resource-specific role. Users who are assigned to this role have full permission to manage selected resource, including the ability to grant permissions to other users.",
+    "ID": "3e4696d5-1937-4741-aacb-062378e0cda2",
+    "predefined": true,
+    "containGlobalOperationsOnly": false
+  },
+  {
+    "permissions": [
+      {
+        "operationAssignableAccessScope": "GLOBAL_ONLY",
+        "protectedType": "com.nomagic.esi.server",
+        "name": "com.nomagic.esi.server_list.all.users",
+        "operationName": "list.all.users",
+        "ID": "34e47503-ad58-401b-a3d9-fdb0e00ea651",
+        "operationDisplayName": "List All Users",
+        "protectedTypeDisplayName": "Server"
+      },
+      {
+        "operationAssignableAccessScope": "GLOBAL_ONLY",
+        "protectedType": "com.nomagic.esi.server",
+        "name": "com.nomagic.esi.server_manage.user.permissions",
+        "operationName": "manage.user.permissions",
+        "ID": "8d7423b8-4e8c-4d32-8d3c-783504bef044",
+        "operationDisplayName": "Manage User Permissions",
+        "protectedTypeDisplayName": "Server"
+      },
+      {
+        "operationAssignableAccessScope": "GLOBAL_ONLY",
+        "protectedType": "com.nomagic.esi.server",
+        "name": "com.nomagic.esi.server_manage.security.roles",
+        "operationName": "manage.security.roles",
+        "ID": "9cfe16ff-13eb-4a38-98b9-a821ad22cf67",
+        "operationDisplayName": "Manage Security Roles",
+        "protectedTypeDisplayName": "Server"
+      },
+      {
+        "operationAssignableAccessScope": "GLOBAL_ONLY",
+        "protectedType": "com.nomagic.esi.resource",
+        "name": "com.nomagic.esi.resource_list.all.resources",
+        "operationName": "list.all.resources",
+        "ID": "d91a7ba9-a017-44ac-9ff8-4b35635cb7b9",
+        "operationDisplayName": "List All Resources",
+        "protectedTypeDisplayName": "Resource"
+      }
+    ],
+    "name": "Security Manager",
+    "description": "Global role. Users who are assigned to this role can grant permissions for server users, including the ability to specify a granted scope.",
+    "ID": "c2c3541a-09e9-466e-85a4-6a5f5c56001d",
+    "predefined": true,
+    "containGlobalOperationsOnly": true
+  },
+  {
+    "permissions": [
+      {
+        "operationAssignableAccessScope": "GLOBAL_OR_OBJECT",
+        "protectedType": "com.nomagic.esi.resource",
+        "name": "com.nomagic.esi.resource_read.resource",
+        "operationName": "read.resource",
+        "ID": "9649cb30-6933-49f1-b309-7aade63340cc",
+        "operationDisplayName": "Read Resources",
+        "protectedTypeDisplayName": "Resource"
+      },
+      {
+        "operationAssignableAccessScope": "GLOBAL_OR_OBJECT",
+        "protectedType": "com.nomagic.esi.resource",
+        "name": "com.nomagic.esi.resource_release.resource.locks",
+        "operationName": "release.resource.locks",
+        "ID": "965a6e40-a2e9-4dfb-9ce2-4a6d6e98afd4",
+        "operationDisplayName": "Release Resource Locks",
+        "protectedTypeDisplayName": "Resource"
+      }
+    ],
+    "name": "Resource Locks Administrator",
+    "description": "Resource-specific role. Users who are assigned to this role can release other users locks of selected resource.",
+    "ID": "a020ca32-22a2-4c90-8513-f6b9c4ea8513",
+    "predefined": true,
+    "containGlobalOperationsOnly": false
+  },
+  {
+    "permissions": [
+      {
+        "operationAssignableAccessScope": "GLOBAL_ONLY",
+        "protectedType": "com.nomagic.esi.server",
+        "name": "com.nomagic.esi.server_config.server",
+        "operationName": "config.server",
+        "ID": "f9f3a93e-6597-40e6-baa4-2a33c1623d14",
+        "operationDisplayName": "Configure Server",
+        "protectedTypeDisplayName": "Server"
+      }
+    ],
+    "name": "Server Administrator",
+    "description": "Global role. Users who are assigned to this role can configure server settings, including the ability to configure LDAP integration, secured connection or server licensing.",
+    "ID": "39f47ac5-c837-4df9-9bc1-0d2a13f72a4c",
+    "predefined": true,
+    "containGlobalOperationsOnly": true
+  },
+  {
+    "permissions": [
+      {
+        "operationAssignableAccessScope": "GLOBAL_OR_OBJECT",
+        "protectedType": "com.nomagic.esi.resource",
+        "name": "com.nomagic.esi.resource_edit.resource",
+        "operationName": "edit.resource",
+        "ID": "0b972f77-368c-4511-9285-0069a1a8bf07",
+        "operationDisplayName": "Edit Resources",
+        "protectedTypeDisplayName": "Resource"
+      },
+      {
+        "operationAssignableAccessScope": "GLOBAL_OR_OBJECT",
+        "protectedType": "com.nomagic.esi.resource",
+        "name": "com.nomagic.esi.resource_read.resource",
+        "operationName": "read.resource",
+        "ID": "9649cb30-6933-49f1-b309-7aade63340cc",
+        "operationDisplayName": "Read Resources",
+        "protectedTypeDisplayName": "Resource"
+      },
+      {
+        "operationAssignableAccessScope": "GLOBAL_OR_OBJECT",
+        "protectedType": "com.nomagic.esi.resource",
+        "name": "com.nomagic.esi.resource_edit.resource.properties",
+        "operationName": "edit.resource.properties",
+        "ID": "a93ff74f-baae-4aea-8f79-1a9d423f35fa",
+        "operationDisplayName": "Edit Resource Properties",
+        "protectedTypeDisplayName": "Resource"
+      }
+    ],
+    "name": "Resource Contributor",
+    "description": "Resource-specific role. Users who are assigned to this role can modify content of selected resource.",
+    "ID": "417494bc-d0e8-449a-a8ac-5476dc2e6537",
+    "predefined": true,
+    "containGlobalOperationsOnly": false
+  },
+  {
+    "permissions": [
+      {
+        "operationAssignableAccessScope": "GLOBAL_ONLY",
+        "protectedType": "com.nomagic.esi.server",
+        "name": "com.nomagic.esi.server_list.all.users",
+        "operationName": "list.all.users",
+        "ID": "34e47503-ad58-401b-a3d9-fdb0e00ea651",
+        "operationDisplayName": "List All Users",
+        "protectedTypeDisplayName": "Server"
+      },
+      {
+        "operationAssignableAccessScope": "GLOBAL_ONLY",
+        "protectedType": "com.nomagic.esi.server",
+        "name": "com.nomagic.esi.server_remove.user",
+        "operationName": "remove.user",
+        "ID": "3f7a74c4-9a95-40a6-837a-2aaf7f5f91ef",
+        "operationDisplayName": "Remove User",
+        "protectedTypeDisplayName": "Server"
+      },
+      {
+        "operationAssignableAccessScope": "GLOBAL_ONLY",
+        "protectedType": "com.nomagic.esi.server",
+        "name": "com.nomagic.esi.server_manage.usergroups",
+        "operationName": "manage.usergroups",
+        "ID": "4381b0ab-d665-42ae-bcf5-91f39d7905d7",
+        "operationDisplayName": "Manage User Groups",
+        "protectedTypeDisplayName": "Server"
+      },
+      {
+        "operationAssignableAccessScope": "GLOBAL_ONLY",
+        "protectedType": "com.nomagic.esi.server",
+        "name": "com.nomagic.esi.server_create.user",
+        "operationName": "create.user",
+        "ID": "d616eb9e-d1d4-4f2d-ad24-3cfb6e57d08e",
+        "operationDisplayName": "Create User",
+        "protectedTypeDisplayName": "Server"
+      },
+      {
+        "operationAssignableAccessScope": "GLOBAL_ONLY",
+        "protectedType": "com.nomagic.esi.server",
+        "name": "com.nomagic.esi.server_edit.user.properties",
+        "operationName": "edit.user.properties",
+        "ID": "d81818d4-0d98-4464-b05c-e54e4af82877",
+        "operationDisplayName": "Edit User Properties",
+        "protectedTypeDisplayName": "Server"
+      }
+    ],
+    "name": "User Manager",
+    "description": "Global role. Users who are assigned to this role can create and manage users in a server.",
+    "ID": "1b3a3af6-887f-4891-a3df-b0e7b9141ff2",
+    "predefined": true,
+    "containGlobalOperationsOnly": true
+  },
+  {
+    "permissions": [
+      {
+        "operationAssignableAccessScope": "GLOBAL_ONLY",
+        "protectedType": "com.nomagic.esi.resource",
+        "name": "com.nomagic.esi.resource_create.resource",
+        "operationName": "create.resource",
+        "ID": "930c939c-6ec4-4c90-9458-92eefc73b11b",
+        "operationDisplayName": "Create Resource",
+        "protectedTypeDisplayName": "Resource"
+      },
+      {
+        "operationAssignableAccessScope": "GLOBAL_ONLY",
+        "protectedType": "com.nomagic.esi.resource",
+        "name": "com.nomagic.esi.resource_categorize.resources",
+        "operationName": "categorize.resources",
+        "ID": "9a223c45-71eb-4e45-b374-a8dd319afcea",
+        "operationDisplayName": "Categorize Resources",
+        "protectedTypeDisplayName": "Resource"
+      },
+      {
+        "operationAssignableAccessScope": "GLOBAL_ONLY",
+        "protectedType": "com.nomagic.esi.resource",
+        "name": "com.nomagic.esi.resource_list.all.resources",
+        "operationName": "list.all.resources",
+        "ID": "d91a7ba9-a017-44ac-9ff8-4b35635cb7b9",
+        "operationDisplayName": "List All Resources",
+        "protectedTypeDisplayName": "Resource"
+      }
+    ],
+    "name": "Resource Creator",
+    "description": "Global role. Users who are assigned to this role can add resources to the server including the ability to categorize them, create new categories or manage existing ones.",
+    "ID": "15c045d8-44e1-4e14-8175-b209b6ae70a4",
+    "predefined": true,
+    "containGlobalOperationsOnly": true
+  }
+]

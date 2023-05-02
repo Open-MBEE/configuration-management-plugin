@@ -1,0 +1,8 @@
+Plugin Version : "${projectVersion}"
+Git Repo : "${projectRepo}"
+Git Branch : "${projectBranch}"
+Commit SHA : "${projectSHA}"
+Jenkins Job ID : "${buildJob}"
+Jenkinsfile-Git Repo : "${buildRepo}"
+Jenkinsfile-Git Branch : "${buildBranch}"
+Jenkinsfile-commit SHA : "${buildSHA}"

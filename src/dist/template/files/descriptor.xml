@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<resourceDescriptor critical="false" 
+                     date="${build.timestamp}" 
+                     description=${descriptor.description}
+                     id="${descriptor.id}"
+                     mdVersionMax="higher" 
+                     mdVersionMin="19.0" 
+                     name=${descriptor.name}
+                     product="${descriptor.product}"
+                     type="Plugin"> 
+     <version human="${human.version}" resource="${internal.version}" internal="${internal.version}"/> 
+     <provider name="OpenMBEE"/>
+     <edition>Reader</edition> 
+     <edition>Community</edition> 
+     <edition>Standard</edition> 
+     <edition>Professional Java</edition> 
+     <edition>Professional C++</edition> 
+     <edition>Professional C#</edition> 
+     <edition>Professional ArcStyler</edition> 
+     <edition>Professional EFFS ArcStyler</edition> 
+     <edition>OptimalJ</edition> 
+     <edition>Professional</edition> 
+     <edition>Architect</edition> 
+     <edition>Enterprise</edition> 
+     <installation> 
+         <!-- START AUTO-GENERATED --> 
+         <!-- END AUTO-GENERATED --> 
+     </installation> 
+ </resourceDescriptor> 

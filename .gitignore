@@ -1,0 +1,15 @@
+.gradle/
+/target/
+/.classpath
+/build
+/.project
+/.settings
+/bin
+/libz
+/lib
+!build/cm
+.idea
+*.iml
+MBSE.log
+*.bck
+*.MF

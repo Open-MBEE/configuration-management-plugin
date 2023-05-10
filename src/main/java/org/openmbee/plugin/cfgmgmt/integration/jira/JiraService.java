@@ -62,19 +62,22 @@ public class JiraService {
             return;
         }
 
-        Element element = elements.get(0);
+        Element element = elements.stream()
+                .filter(e -> apiDomain.isElementInCurrentProject(e))
+                .findFirst()
+                .orElse(elements.get(0));
+
         String elementName = FIRST_CONFIG_OBJECT_FOUND;
         if (element instanceof NamedElement) {
             elementName = OPEN_SQUARE_BRACE + ((NamedElement) element).getQualifiedName() + CLOSE_SQUARE_BRACE;
         }
 
         if (elements.size() > 1) {
-            getConfigurationManagementService().getUIDomain().showWarningMessage(
-                String.format(MULTIPLE_JIRA_CONFIGURATIONS_WARNING, elementName),
-                MULTIPLE_CONFIGURATIONS_WARNING);
+            getConfigurationManagementService().getUIDomain().log(String.format(MULTIPLE_JIRA_CONFIGURATIONS_WARNING, elementName));
         }
 
         List<String> jiraUrls = apiDomain.getStereotypePropertyValueAsString(element, jcsStereotype, PluginConstant.JIRA_URL);
+        List<String> wssoUrls = apiDomain.getStereotypePropertyValueAsString(element, jcsStereotype, PluginConstant.WSSO_URL);
         List<String> jiraRestPaths = apiDomain.getStereotypePropertyValueAsString(element, jcsStereotype, PluginConstant.JIRA_REST_PATH);
         List<String> issueQueries = apiDomain.getStereotypePropertyValueAsString(element, jcsStereotype, PluginConstant.ISSUE_QUERY);
 
@@ -86,7 +89,13 @@ public class JiraService {
             return;
         }
 
-        getJiraClientManager().getActiveJIRAConnectionInfo().setInfo(jiraUrls.get(0), jiraRestPaths.get(0), issueQueries.get(0));
+        // processing wssoUrl separately because it is allowed to be empty
+        String wssoUrl = null;
+        if (wssoUrls != null && !wssoUrls.isEmpty()) {
+            wssoUrl = wssoUrls.get(0);
+        }
+
+        getJiraClientManager().getActiveJIRAConnectionInfo().setInfo(jiraUrls.get(0), wssoUrl, jiraRestPaths.get(0), issueQueries.get(0));
     }
 
     public JiraClient getClient() throws JiraIntegrationException {
@@ -117,7 +126,7 @@ public class JiraService {
         }
 
         getConfigurationManagementService().getWssoService().acquireToken(connectionInfo, client,
-            true, ATLASSIAN_XSRF_TOKEN);
+            connectionInfo.getWssoURL(), ATLASSIAN_XSRF_TOKEN);
     }
 
     protected JiraClient createJiraClient(JiraConnectionInfo connectionInfo) {
@@ -202,7 +211,8 @@ public class JiraService {
     }
 
     protected String buildJiraUrl() {
-        URI uri = URI.create(getJiraClientManager().getActiveJIRAConnectionInfo().getUrl());
+        URI host = URI.create(getJiraClientManager().getActiveJIRAConnectionInfo().getUrl());
+        URI uri = URI.create(String.format("%s://%s", host.getScheme(), host.getHost()));
         return uri.resolve(getJiraClientManager().getActiveJIRAConnectionInfo().getJiraRestPath()).toString();
     }
 

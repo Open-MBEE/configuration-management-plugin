@@ -13,10 +13,10 @@ jobs:
           key: v1-gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
       - restore_cache:
           key: v1-gradle-cache-{{ checksum "build.gradle" }}
+      - run: chmod +x ./gradlew
       - run:
           name: Install dependencies
-          command: chmod +x ./gradlew
-            ./gradlew build -x test
+          command: ./gradlew build -x test
       - save_cache:
           paths:
             - ~/.gradle/wrapper
@@ -42,10 +42,11 @@ jobs:
       - checkout
       - attach_workspace:
           at: .
+      - run: chmod +x ./gradlew
       - run:
           name: Run tests in parallel
           # Use "./gradlew test" instead if tests are not run in parallel
-          command: chmod +x ./gradlew
+          command: |
             cd src/test/java
             # Get list of classnames of tests that should run on this node
             CLASSNAMES=$(circleci tests glob "**/*.java" \

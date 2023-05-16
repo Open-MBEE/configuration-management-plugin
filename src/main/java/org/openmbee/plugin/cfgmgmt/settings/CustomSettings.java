@@ -66,7 +66,10 @@ public class CustomSettings {
             return;
         }
 
-        Element element = elements.get(0);
+        Element element = elements.stream()
+                .filter(e -> getApiDomain().isElementInCurrentProject(e))
+                .findFirst()
+                .orElse(elements.get(0));
 
         String elementName = "";
         if (element instanceof NamedElement) {

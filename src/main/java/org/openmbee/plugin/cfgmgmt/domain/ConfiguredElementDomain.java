@@ -25,6 +25,7 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -106,8 +107,11 @@ public class ConfiguredElementDomain extends LifecycleObjectDomain {
                 initialMaturityRating = initialStatus.getMaturityRating();
             }
             if (initialMaturityRating < cczOwnerMaturityRating) {
+                Optional<LifecycleStatus> cczStatus = cczOwner.getStatus();
+                String errorMessage = String.format(ExceptionConstants.ELEMENT_LACKS_STATUS, cczOwner.getQualifiedName());
+                boolean statusAvailable = cczStatus.isPresent() && cczStatus.get().getName() != null;
                 getUIDomain().logError(String.format(ExceptionConstants.INCOMPATIBLE_CCZ_OWNER_STATUS, cczOwner.getQualifiedName(),
-                    cczOwner.getID(), cczOwner.getStatus()));
+                    cczOwner.getID(), statusAvailable ? cczStatus.get().getName() : errorMessage));
                 return false;
             }
         }

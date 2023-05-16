@@ -182,6 +182,7 @@ public class PluginConstant {
 
     // JIRA Connection Settings
     public static final String JIRA_URL = "jiraURL";
+    public static final String WSSO_URL = "WSSOURL";
     public static final String JIRA_REST_PATH = "jiraRESTPath";
     public static final String ISSUE_QUERY = "issueQuery";
     public static final String FIRST_CONFIG_OBJECT_FOUND = "The first configuration object found";
@@ -271,7 +272,6 @@ public class PluginConstant {
     public static final String CHROMIUM_CACHE = "ChromiumCache";
     public static final String TRUE = "true";
     public static final String FALSE = "false";
-    public static final String PSAML_URL = "psamlUrl";
 
     //JIRA MESSAGES
     public static final String PULL_CHANGE_RECORD_ACTION_JIRA = "PULL_CHANGE_RECORD_ACTION_JIRA";

@@ -4,7 +4,6 @@ import org.openmbee.plugin.cfgmgmt.actions.main.*;
 import com.nomagic.actions.AMConfigurator;
 import com.nomagic.actions.ActionsManager;
 import com.nomagic.magicdraw.actions.MDActionsCategory;
-import org.openmbee.plugin.cfgmgmt.actions.main.*;
 
 public class MainMenuConfigurator implements AMConfigurator {
     private CreateChangeRecordAction createChangeRecordAction;

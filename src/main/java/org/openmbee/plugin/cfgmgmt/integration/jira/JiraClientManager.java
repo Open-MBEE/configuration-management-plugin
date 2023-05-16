@@ -9,7 +9,7 @@ public class JiraClientManager {
 
     public JiraClientManager() {
         clientMap = new HashMap<>();
-        activeJIRAConnectionInfo = new JiraConnectionInfo(null, null, null);
+        activeJIRAConnectionInfo = new JiraConnectionInfo(null, null, null, null);
     }
 
     public JiraConnectionInfo getActiveJIRAConnectionInfo() {

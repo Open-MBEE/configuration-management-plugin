@@ -7,4 +7,7 @@ orbs:
 workflows:
   checkout-build-test:
     jobs:
+      - run:
+        name: chmod permissions
+        command: chmod +x ./gradlew
       - gradle/test

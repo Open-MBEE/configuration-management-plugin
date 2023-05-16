@@ -12,7 +12,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Element;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.NamedElement;
-import org.openmbee.plugin.cfgmgmt.integration.threedx.json.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

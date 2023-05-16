@@ -9,12 +9,12 @@ import org.openmbee.plugin.cfgmgmt.integration.ModalRestHandler;
 import org.openmbee.plugin.cfgmgmt.integration.twc.json.TwcRevisionDifferenceJson;
 import org.openmbee.plugin.cfgmgmt.integration.twc.json.TwcRoleJson;
 import org.openmbee.plugin.cfgmgmt.integration.twc.json.element.*;
+import org.openmbee.plugin.cfgmgmt.integration.twc.json.element.TwcElementJson;
 import com.google.gson.*;
 import com.nomagic.magicdraw.core.Project;
 import com.nomagic.task.RunnableWithProgress;
 import com.nomagic.ui.ProgressStatusRunner;
 import org.eclipse.emf.common.util.URI;
-import org.openmbee.plugin.cfgmgmt.integration.twc.json.element.TwcElementJson;
 
 import java.io.BufferedReader;
 import java.io.InputStream;

@@ -12,7 +12,6 @@ import com.nomagic.magicdraw.ui.browser.actions.DefaultBrowserAction;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Class;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Element;
 import com.nomagic.uml2.ext.magicdraw.mdprofiles.Stereotype;
-import org.openmbee.plugin.cfgmgmt.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

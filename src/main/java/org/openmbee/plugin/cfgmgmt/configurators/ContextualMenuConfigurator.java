@@ -6,7 +6,6 @@ import com.nomagic.actions.ActionsManager;
 import com.nomagic.magicdraw.actions.BrowserContextAMConfigurator;
 import com.nomagic.magicdraw.actions.MDActionsCategory;
 import com.nomagic.magicdraw.ui.browser.Tree;
-import org.openmbee.plugin.cfgmgmt.actions.context.*;
 
 public class ContextualMenuConfigurator implements BrowserContextAMConfigurator {
     private ConfigureAction configureAction;

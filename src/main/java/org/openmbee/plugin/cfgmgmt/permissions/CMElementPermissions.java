@@ -126,8 +126,8 @@ public class CMElementPermissions implements ElementPermissions {
         }
 
         // if affecting CR active
-        if(configuredElement != null) {
-            return isChangeRecordActive(configuredElement);
+        if(configuredElement != null && !isChangeRecordActive(configuredElement)) {
+            return false;
         }
 
         if (element instanceof TaggedValue) {

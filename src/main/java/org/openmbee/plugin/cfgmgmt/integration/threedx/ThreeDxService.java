@@ -12,7 +12,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Element;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.NamedElement;
-import org.openmbee.plugin.cfgmgmt.integration.threedx.json.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -63,7 +62,7 @@ public class ThreeDxService {
     public void acquireToken() {
         try {
             getConfigurationManagementService().getWssoService().acquireToken(getThreeDxClientManager().getActive3DxConnectionInfo(),
-                    getOrCreateClient(), false, "CASTGC");
+                    getOrCreateClient(), null, "CASTGC");
         } catch (Exception e) {
             getUIDomain().logErrorAndShowMessage(getLogger(), e.getMessage(), e.getMessage(), e);
         }
@@ -99,15 +98,18 @@ public class ThreeDxService {
             return;
         }
 
+        Element element = elements.stream()
+                .filter(e -> getConfigurationManagementService().getApiDomain().isElementInCurrentProject(e))
+                .findFirst()
+                .orElse(elements.get(0));
+
         String elementName = EMPTY_STRING;
-        Element element = elements.get(ZERO);
         if (element instanceof NamedElement) {
             elementName = ((NamedElement) element).getQualifiedName();
         }
 
         if (elements.size() > 1) {
-            getUIDomain().showWarningMessage(String.format(MULTIPLE_THREEDX_CONFIGURATIONS_WARNING, elementName),
-                MULTIPLE_CONFIGURATIONS_WARNING);
+            getConfigurationManagementService().getUIDomain().log(String.format(MULTIPLE_THREEDX_CONFIGURATIONS_WARNING, elementName));
         }
 
         List<String> pass3dsUrls = getApiDomain().getStereotypePropertyValueAsString(element,

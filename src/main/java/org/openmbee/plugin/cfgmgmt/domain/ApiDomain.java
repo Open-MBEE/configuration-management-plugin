@@ -72,6 +72,11 @@ public class ApiDomain {
         return element != null ? ProjectUtilities.getProject(element) : null;
     }
 
+    public boolean isElementInCurrentProject(Element element) {
+        // Careful when changing this. There are many  getProject methods in the API and most do not return the correct result
+        return ProjectUtilities.getProjectFor(element).equals(getIProject(getCurrentProject().getPrimaryModel()));
+    }
+
     public Collection<Element> getAllElementsInCurrentProject() {
         Project project = getCurrentProject();
         return project != null ? Finder.byScope().find(project) : null;

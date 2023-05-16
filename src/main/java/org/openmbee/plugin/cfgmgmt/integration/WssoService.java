@@ -24,6 +24,7 @@ import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
@@ -51,11 +52,11 @@ public class WssoService {
         return configurationManagementService;
     }
 
-    public void acquireToken(IConnectionInfo connInfo, IClient client, boolean redirectThroughPSAML, String cookieName) {
+    public void acquireToken(IConnectionInfo connInfo, IClient client, String redirectThroughPSAML, String cookieName) {
         new Thread(() -> asyncLoginAttempt(connInfo, client, redirectThroughPSAML, cookieName)).start();
     }
 
-    protected void asyncLoginAttempt(IConnectionInfo connInfo, IClient client, boolean redirectThroughPSAML, String cookieName) {
+    protected void asyncLoginAttempt(IConnectionInfo connInfo, IClient client, String redirectThroughPSAML, String cookieName) {
         // only use this in conjunction with a Thread or some other async method
         try {
             getLoginToken(connInfo, client, redirectThroughPSAML, cookieName);
@@ -154,7 +155,7 @@ public class WssoService {
         return EngineImpl.with(engineId).orElse(null);
     }
 
-    protected void getLoginToken(IConnectionInfo connInfo, IClient client, boolean redirectThroughPSAML,
+    protected void getLoginToken(IConnectionInfo connInfo, IClient client, String redirectThroughPSAML,
             String cookieName) throws MalformedURLException {
         // DEPLOYMENT ONLY : Use this function during deployment to generate the base64 encoding of the form to include
         // at the bottom of this module.
@@ -163,8 +164,8 @@ public class WssoService {
         String url;
         String targetUrl = connInfo.getUrl();
 
-        if (redirectThroughPSAML) {
-            url = getRedirectString(targetUrl);
+        if (redirectThroughPSAML != null && !redirectThroughPSAML.isEmpty()) {
+            url = getRedirectString(targetUrl, redirectThroughPSAML);
         } else {
             url = targetUrl;
         }
@@ -184,10 +185,9 @@ public class WssoService {
         browser.navigation().loadUrl(url);
     }
 
-    protected String getRedirectString(String targetUrl) {
+    protected String getRedirectString(String targetUrl, String wssoUrl) {
         //TODO use a library for the url cleanup
-        return ConfigurationManagementSystemProperties.getPropertyValue(PSAML_URL) + "?PartnerSpId=" +
-                targetUrl.replace("\\/", "%2F").replace(COLON, "%3A");
+        return URI.create(wssoUrl + "?PartnerSpId=" + targetUrl).toString();
     }
 
     protected void setupAsyncTokenAcquire(IClient client, String cookieName, String targetUrl, Engine engine, Browser browser) {
